@@ -42,7 +42,7 @@ public class AddressAndValueBolt extends BaseRichBolt {
         for (int i = 0; i < outs.length(); i++) {
             JSONObject out = outs.getJSONObject(i);
             String address = out.getString("addr");
-            Integer value = out.getInt("value");
+            Long value = out.getLong("value");
 
             collector.emit(new Values(address, value));
         }

@@ -26,7 +26,7 @@ public class RollingSumBolt extends BaseRichBolt {
             "Actual window length is %d seconds when it should be %d seconds"
                     + " (you can safely ignore this warning during the startup phase)";
 
-    private final SlidingWindowCounter<Object> counter;
+    private final SlidingWindowSum<Object> counter;
     private final int windowLengthInSeconds;
     private final int emitFrequencyInSeconds;
     private OutputCollector collector;
@@ -39,7 +39,7 @@ public class RollingSumBolt extends BaseRichBolt {
     public RollingSumBolt(int windowLengthInSeconds, int emitFrequencyInSeconds) {
         this.windowLengthInSeconds = windowLengthInSeconds;
         this.emitFrequencyInSeconds = emitFrequencyInSeconds;
-        counter = new SlidingWindowCounter<Object>(deriveNumWindowChunksFrom(this.windowLengthInSeconds,
+        counter = new SlidingWindowSum<Object>(deriveNumWindowChunksFrom(this.windowLengthInSeconds,
                 this.emitFrequencyInSeconds));
     }
 
@@ -80,14 +80,13 @@ public class RollingSumBolt extends BaseRichBolt {
         for (Entry<Object, Long> entry : counts.entrySet()) {
             Object obj = entry.getKey();
             Long count = entry.getValue();
-            Integer intCount = count != null ? count.intValue() : null;
-            collector.emit(new Values(obj, intCount, actualWindowLengthInSeconds));
+            collector.emit(new Values(obj, count, actualWindowLengthInSeconds));
         }
     }
 
     private void addObjAndAck(Tuple tuple) {
         Object obj = tuple.getValue(0);
-        long value = tuple.getLong(0);
+        long value = tuple.getLong(1);
         counter.add(obj, value);
         collector.ack(tuple);
     }

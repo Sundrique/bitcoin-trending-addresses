@@ -27,13 +27,13 @@ import java.util.List;
 public class Rankings implements Serializable {
 
     private static final long serialVersionUID = -1549827195410578903L;
-    private static final int DEFAULT_COUNT = 10;
+    private static final int DEFAULT_VALUE = 10;
 
     private final int maxSize;
     private final List<Rankable> rankedItems = Lists.newArrayList();
 
     public Rankings() {
-        this(DEFAULT_COUNT);
+        this(DEFAULT_VALUE);
     }
 
     public Rankings(int topN) {
@@ -129,12 +129,12 @@ public class Rankings implements Serializable {
     }
 
     /**
-     * Removes ranking entries that have a count of zero.
+     * Removes ranking entries that have a value of zero.
      */
-    public void pruneZeroCounts() {
+    public void pruneZeroValues() {
         int i = 0;
         while (i < rankedItems.size()) {
-            if (rankedItems.get(i).getCount() == 0) {
+            if (rankedItems.get(i).getValue() == 0) {
                 rankedItems.remove(i);
             }
             else {

@@ -48,7 +48,7 @@ import java.util.Map;
  *
  * @param <T> The type of those objects we want to count.
  */
-public final class SlidingWindowCounter<T> implements Serializable {
+public final class SlidingWindowSum<T> implements Serializable {
 
     private static final long serialVersionUID = -2645063988768785810L;
 
@@ -57,7 +57,7 @@ public final class SlidingWindowCounter<T> implements Serializable {
     private int tailSlot;
     private int windowLengthInSlots;
 
-    public SlidingWindowCounter(int windowLengthInSlots) {
+    public SlidingWindowSum(int windowLengthInSlots) {
         if (windowLengthInSlots < 2) {
             throw new IllegalArgumentException(
                     "Window length in slots must be at least two (you requested " + windowLengthInSlots + ")");

@@ -33,7 +33,7 @@ public class BlockchainInfoClient {
 
         JSONObject subscriptionMessage = new JSONObject();
         subscriptionMessage.put("op", "unconfirmed_sub");
-        userSession.getBasicRemote().sendText(subscriptionMessage.toString());
+        session.getBasicRemote().sendText(subscriptionMessage.toString());
 
         LOG.info(subscriptionMessage.toString());
 

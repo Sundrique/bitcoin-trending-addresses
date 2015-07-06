@@ -73,7 +73,7 @@ public class RankableObjectWithFields implements Rankable, Serializable {
         return obj;
     }
 
-    public long getCount() {
+    public long getValue() {
         return count;
     }
 
@@ -86,7 +86,7 @@ public class RankableObjectWithFields implements Rankable, Serializable {
 
     @Override
     public int compareTo(Rankable other) {
-        long delta = this.getCount() - other.getCount();
+        long delta = this.getValue() - other.getValue();
         if (delta > 0) {
             return 1;
         }
@@ -142,7 +142,7 @@ public class RankableObjectWithFields implements Rankable, Serializable {
     @Override
     public Rankable copy() {
         List<Object> shallowCopyOfFields = ImmutableList.copyOf(getFields());
-        return new RankableObjectWithFields(getObject(), getCount(), shallowCopyOfFields);
+        return new RankableObjectWithFields(getObject(), getValue(), shallowCopyOfFields);
     }
 
 }

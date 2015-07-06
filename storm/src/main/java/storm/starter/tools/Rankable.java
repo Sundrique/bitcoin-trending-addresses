@@ -21,7 +21,7 @@ public interface Rankable extends Comparable<Rankable> {
 
     Object getObject();
 
-    long getCount();
+    long getValue();
 
     /**
      * Note: We do not defensively copy the object wrapped by the Rankable.  It is passed as is.

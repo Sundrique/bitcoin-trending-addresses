@@ -23,9 +23,9 @@ import storm.starter.tools.Rankable;
 import storm.starter.tools.RankableObjectWithFields;
 
 /**
- * This bolt ranks incoming objects by their count.
+ * This bolt ranks incoming objects by their value.
  * <p/>
- * It assumes the input tuples to adhere to the following format: (object, object_count, additionalField1,
+ * It assumes the input tuples to adhere to the following format: (object, object_value, additionalField1,
  * additionalField2, ..., additionalFieldN).
  */
 public final class IntermediateRankingsBolt extends AbstractRankerBolt {

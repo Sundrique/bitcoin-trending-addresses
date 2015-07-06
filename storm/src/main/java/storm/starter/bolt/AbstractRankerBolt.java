@@ -31,25 +31,17 @@ import storm.starter.tools.Rankings;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This abstract bolt provides the basic behavior of bolts that rank objects according to their count.
- * <p/>
- * It uses a template method design pattern for {@link AbstractRankerBolt#execute(Tuple, BasicOutputCollector)} to allow
- * actual bolt implementations to specify how incoming tuples are processed, i.e. how the objects embedded within those
- * tuples are retrieved and counted.
- */
 public abstract class AbstractRankerBolt extends BaseBasicBolt {
 
-    private static final long serialVersionUID = 4931640198501530202L;
     private static final int DEFAULT_EMIT_FREQUENCY_IN_SECONDS = 2;
-    private static final int DEFAULT_COUNT = 10;
+    private static final int DEFAULT_VALUE = 10;
 
     private final int emitFrequencyInSeconds;
-    private final int count;
+    private final int value;
     private final Rankings rankings;
 
     public AbstractRankerBolt() {
-        this(DEFAULT_COUNT, DEFAULT_EMIT_FREQUENCY_IN_SECONDS);
+        this(DEFAULT_VALUE, DEFAULT_EMIT_FREQUENCY_IN_SECONDS);
     }
 
     public AbstractRankerBolt(int topN) {
@@ -64,9 +56,9 @@ public abstract class AbstractRankerBolt extends BaseBasicBolt {
             throw new IllegalArgumentException(
                     "The emit frequency must be >= 1 seconds (you requested " + emitFrequencyInSeconds + " seconds)");
         }
-        count = topN;
+        value = topN;
         this.emitFrequencyInSeconds = emitFrequencyInSeconds;
-        rankings = new Rankings(count);
+        rankings = new Rankings(value);
     }
 
     protected Rankings getRankings() {
