@@ -35,11 +35,15 @@ public class ReportBolt extends BaseRichBolt {
     public void execute(Tuple tuple) {
         Rankings rankableList = (Rankings) tuple.getValue(0);
 
+        StringBuilder message = new StringBuilder();
+
         for (Rankable r : rankableList.getRankings()) {
             String address = r.getObject().toString();
             Long value = r.getValue();
-            redis.publish("BitcoinTopology", address + "|" + Long.toString(value));
+
+            message.append(address + "|" + Long.toString(value) + ",");
         }
+        redis.publish("BitcoinTopology", message.toString());
     }
 
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
