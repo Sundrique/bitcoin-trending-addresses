@@ -33,19 +33,19 @@ public class AddressAndValueBolt extends BaseRichBolt {
         String transaction = tuple.getString(0);
 
         try {
-        JSONObject message = new JSONObject(transaction);
+            JSONObject message = new JSONObject(transaction);
 
-        JSONArray outs = message
-                .getJSONObject("x")
-                .getJSONArray("out");
+            JSONArray outs = message
+                    .getJSONObject("x")
+                    .getJSONArray("out");
 
-        for (int i = 0; i < outs.length(); i++) {
-            JSONObject out = outs.getJSONObject(i);
-            String address = out.getString("addr");
-            Long value = out.getLong("value");
+            for (int i = 0; i < outs.length(); i++) {
+                JSONObject out = outs.getJSONObject(i);
+                String address = out.getString("addr");
+                Long value = out.getLong("value");
 
-            collector.emit(new Values(address, value));
-        }
+                collector.emit(new Values(address, value));
+            }
 
         } catch (JSONException e) {
             LOG.error(e.getMessage());

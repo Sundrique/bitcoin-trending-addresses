@@ -26,6 +26,8 @@ public class BitcoinTopology {
         builder.setBolt("intermediate-ranker", new IntermediateRankingsBolt(TOP_N), 4).fieldsGrouping("rolling-sum-bolt", new Fields("address"));
         builder.setBolt("total-ranker", new TotalRankingsBolt(TOP_N)).globalGrouping("intermediate-ranker");
 
+        builder.setBolt("report-bolt", new ReportBolt(), 1).globalGrouping("total-ranker");
+
         Config conf = new Config();
 
         conf.setDebug(true);
